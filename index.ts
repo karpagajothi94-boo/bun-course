@@ -1,6 +1,21 @@
-const z=10
-const read = (text:string)=>{
-    return text
-}
-const msg = read("Hello world!")
-console.log("msggg",msg);
+import figlet from "figlet";
+
+const server = Bun.serve(
+    {
+        port:3000,
+        fetch(req) {
+            const url = new URL(req.url);
+            if(url.pathname==="/"){
+
+                const body = figlet.textSync("Holaaa!!!Ohhhhhh")
+                return new Response(body)
+            }
+            if(url.pathname==="/about"){
+                return new Response("About me")
+            }
+            return new Response("404!")
+        },
+    }
+)
+
+console.log(`Listening to the PORT http://localhost:${server.port}`);
